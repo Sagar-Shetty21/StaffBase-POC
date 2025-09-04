@@ -6,3 +6,11 @@ export interface Employee {
     designation: string,
     joining_date: string,
 }
+
+export interface EmployeeResponse {
+  page: number
+  perPage: number
+  totalItems: number
+  totalPages: number
+  items: Employee[]
+}
