@@ -4,8 +4,12 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
-    "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "react-router dev",
+    "dev:backend": "bash -c './backend/pocketbase serve'",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "start:frontend": "react-router-serve ./build/server/index.js",
+    "start:backend": "bash -c './backend/pocketbase serve'",
     "typecheck": "react-router typegen && tsc"
   },
   "dependencies": {
@@ -25,6 +29,7 @@
     "@types/node": "^20",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
+    "concurrently": "^9.2.1",
     "playwright": "^1.55.0",
     "typescript": "^5.8.3",
     "vite": "^6.3.3",
