@@ -1,0 +1,54 @@
+.tableContainer {
+  padding: 1rem;
+  background-color: #f9f9f9;
+}
+
+.searchInput {
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+
+  th, td {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  th {
+    background-color: #f0f0f0;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f7f7f7;
+  }
+}
+
+.pagination {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  }
+}
