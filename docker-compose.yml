@@ -1,0 +1,12 @@
+services:
+    pocketbase:
+        image: elestio/pocketbase:v0.29.3
+        ports:
+            - "8090:8090"
+        volumes:
+            - pb_data:/pb_data
+            - pb_public:/pb_public
+
+volumes:
+    pb_data:
+    pb_public:
