@@ -1,39 +1,40 @@
 {
-  "name": "staff-base",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "react-router build",
-    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
-    "dev:frontend": "react-router dev",
-    "dev:backend": "bash -c './backend/pocketbase serve'",
-    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
-    "start:frontend": "react-router-serve ./build/server/index.js",
-    "start:backend": "bash -c './backend/pocketbase serve'",
-    "typecheck": "react-router typegen && tsc"
-  },
-  "dependencies": {
-    "@react-router/node": "^7.7.1",
-    "@react-router/serve": "^7.7.1",
-    "@tanstack/react-table": "^8.21.3",
-    "isbot": "^5.1.27",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-hook-form": "^7.62.0",
-    "react-router": "^7.7.1",
-    "sass": "^1.92.0"
-  },
-  "devDependencies": {
-    "@react-router/dev": "^7.7.1",
-    "@testing-library/react": "^16.3.0",
-    "@types/node": "^20",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
-    "concurrently": "^9.2.1",
-    "playwright": "^1.55.0",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.3",
-    "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^3.2.4"
-  }
+    "name": "staff-base",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "react-router build",
+        "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+        "dev:frontend": "react-router dev",
+        "dev:backend": "docker compose up pocketbase",
+        "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+        "start:frontend": "react-router-serve ./build/server/index.js",
+        "start:backend": "docker compose up -d pocketbase",
+        "stop:backend": "docker compose down",
+        "typecheck": "react-router typegen && tsc"
+    },
+    "dependencies": {
+        "@react-router/node": "^7.7.1",
+        "@react-router/serve": "^7.7.1",
+        "@tanstack/react-table": "^8.21.3",
+        "isbot": "^5.1.27",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0",
+        "react-hook-form": "^7.62.0",
+        "react-router": "^7.7.1",
+        "sass": "^1.92.0"
+    },
+    "devDependencies": {
+        "@react-router/dev": "^7.7.1",
+        "@testing-library/react": "^16.3.0",
+        "@types/node": "^20",
+        "@types/react": "^19.1.2",
+        "@types/react-dom": "^19.1.2",
+        "concurrently": "^9.2.1",
+        "playwright": "^1.55.0",
+        "typescript": "^5.8.3",
+        "vite": "^6.3.3",
+        "vite-tsconfig-paths": "^5.1.4",
+        "vitest": "^3.2.4"
+    }
 }
