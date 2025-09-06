@@ -1,15 +1,8 @@
 import EmployeeForm from "components/Form/EmployeeForm";
-// import fs from 'fs/promises';
 import { Link, useActionData, useLoaderData, useSubmit, type ActionFunctionArgs, type LoaderFunctionArgs } from "react-router";
-import { addEmployeeToFile, getNextEmployeeId } from "utils/helpers";
 import styles from './add-employee.module.scss';
 import React from "react";
-
-// export async function loader({ params }: LoaderFunctionArgs) {
-//   const data = await fs.readFile('./data/employees.json', 'utf-8');
-//   const employees = JSON.parse(data);
-//   return employees;
-// }
+import { postEmployee } from "services/employees";
 
 export async function action({request}: ActionFunctionArgs) {
   const formData = await request.formData();
@@ -32,7 +25,7 @@ export async function action({request}: ActionFunctionArgs) {
     joining_date: joiningDate as string
   }
 
-  const addEmployee = await addEmployeeToFile('./data/employees.json', newEmployeeData)
+  const addEmployee = await postEmployee(newEmployeeData)
 
   if(addEmployee){
     return {isSuccess: true, message: "Successfully added employee", data: newEmployeeData}
@@ -43,7 +36,6 @@ export async function action({request}: ActionFunctionArgs) {
 
 export default function AddEmployee() {
   const submit = useSubmit();
-  // const employees = useLoaderData<typeof loader>();
   let actionResult = useActionData<typeof action>();
   const [result, setResult] = React.useState<typeof actionResult>();
 

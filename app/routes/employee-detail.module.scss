@@ -1,0 +1,135 @@
+.container {
+  padding: 1.5rem;
+  max-width: 900px;
+  margin: auto;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+
+  h2 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 0.75rem;
+
+  button {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+  }
+}
+
+.updateCancelBtn {
+  background-color: #ffd67e;
+  color: #fff;
+
+  &:hover {
+    background-color: #ffd06b;
+  }
+}
+
+.updateBtn {
+  background-color: #007bff;
+  color: #fff;
+
+  &:hover {
+    background-color: #0062cc;
+  }
+}
+
+.deleteBtn {
+  background-color: #dc3545;
+  color: #fff;
+
+  &:hover {
+    background-color: #c82333;
+  }
+}
+
+.topSection {
+  display: flex;
+  gap: 2rem;
+  padding: 1.2rem 2.2rem;
+  align-items: start;
+  margin-bottom: 2rem;
+  border: 2px solid rgb(224, 224, 224);
+  border-radius: 6px;
+}
+
+.imageWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.primaryDetails {
+  flex: 1;
+
+  h3 {
+    margin-top: 0;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    margin: 0.5rem 0;
+  }
+}
+
+.additionalDetails {
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+
+  h3 {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+  }
+}
+
+.section {
+  margin-bottom: 1.25rem;
+
+  h4 {
+    margin-bottom: 0.5rem;
+    color: #444;
+  }
+
+  p {
+    margin: 0;
+    color: #666;
+  }
+}
+
+.copyBtn {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: #28a745;
+  color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background: #218838;
+  }
+}
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: #dc3545;
+  font-weight: bold;
+}

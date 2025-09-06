@@ -5,11 +5,13 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLoaderData,
 } from "react-router";
 
 import type { Route } from "./+types/root";
 import "../assets/styles/global.scss";
 import Navbar from "components/Layout/Navbar";
+import { QueryClient, QueryClientProvider, HydrationBoundary } from "@tanstack/react-query";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -34,7 +36,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <Navbar />
         {children}
         <ScrollRestoration />
         <Scripts />
@@ -43,8 +44,18 @@ export function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+
 export default function App() {
-  return <Outlet />;
+  const queryClient = new QueryClient()
+  const dehydratedState = useLoaderData();
+  return (
+    <QueryClientProvider client={queryClient}>
+      <HydrationBoundary state={dehydratedState?.dehydratedState}>
+        <Navbar />
+        <Outlet />
+      </HydrationBoundary>
+    </QueryClientProvider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
