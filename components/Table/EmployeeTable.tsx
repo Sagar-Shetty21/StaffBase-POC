@@ -5,23 +5,24 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   flexRender,
+  type Row,
 } from '@tanstack/react-table';
 import styles from './Table.module.scss';
 import type { Employee } from 'types/employee';
+import { Link } from 'react-router';
 
 type Props = {
   data: Employee[];
+  page: number;
+  totalPages: number;
+  setPage: React.Dispatch<React.SetStateAction<number>>
 };
 
-const EmployeeTable: React.FC<Props> = ({ data }) => {
+const EmployeeTable: React.FC<Props> = ({ data, page, totalPages, setPage }) => {
   const [globalFilter, setGlobalFilter] = useState('');
 
   const columns = useMemo(
     () => [
-      {
-        accessorKey: 'id',
-        header: 'ID',
-      },
       {
         accessorKey: 'name',
         header: 'Name',
@@ -42,6 +43,18 @@ const EmployeeTable: React.FC<Props> = ({ data }) => {
         accessorKey: 'joining_date',
         header: 'Joining Date',
       },
+      {
+        id: 'actions',
+        header: 'Actions',
+        cell: ({ row }: { row: Row<Employee> }) => (
+          <Link
+            className={styles.viewButton}
+            to={`/employee/${row.original.id}`}
+          >
+            View
+          </Link>
+        ),
+      },
     ],
     []
   );
@@ -49,9 +62,11 @@ const EmployeeTable: React.FC<Props> = ({ data }) => {
   const table = useReactTable({
     data,
     columns,
+    pageCount: totalPages,
     state: {
-      globalFilter,
+      globalFilter
     },
+    manualPagination: true,
     onGlobalFilterChange: setGlobalFilter,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
@@ -93,13 +108,13 @@ const EmployeeTable: React.FC<Props> = ({ data }) => {
       </table>
 
       <div className={styles.pagination}>
-        <button onClick={() => table.previousPage()} disabled={!table.getCanPreviousPage()}>
+        <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page <= 1}>
           Previous
         </button>
         <span>
-          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+          Page {page} of {totalPages}
         </span>
-        <button onClick={() => table.nextPage()} disabled={!table.getCanNextPage()}>
+        <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page >= totalPages}>
           Next
         </button>
       </div>
