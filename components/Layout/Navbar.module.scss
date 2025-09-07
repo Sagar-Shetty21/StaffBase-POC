@@ -1,31 +1,532 @@
+// Navbar.module.scss
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #1e1e2f;
-  padding: 1rem 2rem;
-  color: white;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.navbarContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    transition: all 0.3s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+.logoIcon {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    padding: 0.5rem;
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.searchContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    max-width: 400px;
+    flex: 1;
+    margin: 0 2rem;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.searchIcon {
+    position: absolute;
+    left: 1rem;
+    color: #94a3b8;
+    z-index: 1;
+}
+
+.searchInput {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 2rem;
+    color: white;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+
+    &::placeholder {
+        color: #94a3b8;
+    }
+
+    &:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.15);
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
 }
 
 .navLinks {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-  margin: 0;
-  padding: 0;
+    display: flex;
+    list-style: none;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+
+    @media (max-width: 768px) {
+        display: none;
+    }
 }
 
 .link {
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+    position: relative;
 
-  &:hover {
-    text-decoration: underline;
-  }
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    &.active {
+        background: rgba(59, 130, 246, 0.2);
+        color: #60a5fa;
+
+        &::after {
+            content: "";
+            position: absolute;
+            bottom: -0.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 4px;
+            background: #3b82f6;
+            border-radius: 50%;
+        }
+    }
+}
+
+.rightActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.iconButton {
+    position: relative;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 0.75rem;
+    color: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+        transform: translateY(-2px);
+    }
+}
+
+.badge {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.25rem;
+    background: #ef4444;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.15rem 0.4rem;
+    border-radius: 9999px;
+    min-width: 1.2rem;
+    text-align: center;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+.profileButton {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 2rem;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.15);
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+
+.profileAvatar {
+    width: 2rem;
+    height: 2rem;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.profileInfo {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    @media (max-width: 900px) {
+        display: none;
+    }
+}
+
+.profileName {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: white;
+}
+
+.profileRole {
+    font-size: 0.7rem;
+    color: #94a3b8;
+}
+
+.chevron {
+    color: #94a3b8;
+    transition: transform 0.3s ease;
+}
+
+.dropdownMenu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    border: 1px solid #e2e8f0;
+    min-width: 280px;
+    z-index: 1000;
+    animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdownHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem 0.5rem;
+    border-bottom: 1px solid #f1f5f9;
+
+    h4 {
+        margin: 0;
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1e293b;
+    }
+}
+
+.markAllRead {
+    font-size: 0.8rem;
+    color: #3b82f6;
+    cursor: pointer;
+    font-weight: 500;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.notificationList {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.notificationItem {
+    position: relative;
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #f8fafc;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background: #f8fafc;
+    }
+
+    &.unread {
+        background: #f0f9ff;
+
+        .unreadDot {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            width: 6px;
+            height: 6px;
+            background: #3b82f6;
+            border-radius: 50%;
+        }
+    }
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.notificationText {
+    font-size: 0.9rem;
+    color: #374151;
+    margin-bottom: 0.25rem;
+    line-height: 1.4;
+}
+
+.notificationTime {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.dropdownFooter {
+    padding: 0.75rem 1.25rem;
+    border-top: 1px solid #f1f5f9;
+}
+
+.viewAll {
+    width: 100%;
+    padding: 0.75rem;
+    background: #f8fafc;
+    border: none;
+    border-radius: 0.5rem;
+    color: #3b82f6;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: #e0f2fe;
+    }
+}
+
+.profileMenuHeader {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem;
+
+    .profileName {
+        font-weight: 600;
+        color: #1e293b;
+        margin-bottom: 0.25rem;
+    }
+}
+
+.profileEmail {
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.dropdownDivider {
+    height: 1px;
+    background: #e2e8f0;
+    margin: 0.5rem 0;
+}
+
+.menuItems {
+    padding: 0.5rem 0;
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1.25rem;
+    border: none;
+    background: none;
+    text-align: left;
+    color: #374151;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background: #f8fafc;
+        color: #1e293b;
+    }
+}
+
+.mobileMenuToggle {
+    display: none;
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 0.5rem;
+    color: white;
+    cursor: pointer;
+
+    @media (max-width: 768px) {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.mobileMenu {
+    display: none;
+    background: #1e293b;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    animation: slideDown 0.2s ease-out;
+
+    @media (max-width: 768px) {
+        display: block;
+    }
+}
+
+.mobileSearchContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .searchIcon {
+        position: absolute;
+        left: 1rem;
+        color: #94a3b8;
+        z-index: 1;
+    }
+
+    .searchInput {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 3rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0.75rem;
+        color: white;
+        font-size: 0.9rem;
+
+        &::placeholder {
+            color: #94a3b8;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+    }
+}
+
+.mobileNavLinks {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+
+    li {
+        margin-bottom: 0.25rem;
+    }
+}
+
+.mobileLink {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-weight: 500;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    &.active {
+        background: rgba(59, 130, 246, 0.2);
+        color: #60a5fa;
+    }
+}
+
+.mobileProfile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.75rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+    .profileInfo {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .profileName {
+        color: white;
+        font-weight: 600;
+    }
+
+    .profileRole {
+        color: #94a3b8;
+        font-size: 0.8rem;
+    }
 }
