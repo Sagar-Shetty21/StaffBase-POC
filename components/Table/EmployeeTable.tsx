@@ -7,7 +7,7 @@ import {
     flexRender,
     type Row,
 } from "@tanstack/react-table";
-import styles from "./Table.module.scss";
+import styles from "./EmployeeTable.module.scss";
 import type { Employee } from "types/employee";
 import { Link } from "react-router";
 

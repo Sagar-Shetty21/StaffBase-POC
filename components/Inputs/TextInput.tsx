@@ -25,10 +25,6 @@ const TextInput: React.FC<TextInputProps> = ({
     }
   };
 
-  if (isDisabled) {
-    return children;
-  }
-
   return (
     <div className={styles.wrapper}>
       <input
@@ -37,12 +33,9 @@ const TextInput: React.FC<TextInputProps> = ({
         placeholder={placeholder}
         onChange={handleChange}
         className={styles.textInput}
+        disabled={isDisabled}
       />
-      <label
-        className={`${styles.label} ${
-          value ? styles.labelFilled : ""
-        }`}
-      >
+      <label className={`${styles.label} ${value ? styles.labelFilled : ""}`}>
         {label}
       </label>
     </div>

@@ -1,0 +1,17 @@
+@use "../assets/styles/mixins" as mixins;
+
+.appContainer {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.bodyContainer {
+  display: flex;
+  flex-grow: 1;
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
+  @include mixins.hideScrollbar;
+}

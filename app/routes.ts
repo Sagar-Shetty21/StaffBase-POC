@@ -1,9 +1,8 @@
 import { type RouteConfig, index, route } from "@react-router/dev/routes";
 
 export default [
-    index("routes/home.tsx"), 
-    route("employees","routes/employees-list.tsx"), 
-    route("add","routes/add-employee.tsx"),
-    route("employee/:id","routes/employee-detail.tsx"),
-    route("employee/form/:id","routes/employee-detail-form.tsx")
+  index("routes/Home/Home.tsx"),
+  route("employees", "routes/EmployeesList/EmployeesList.tsx"),
+  route("add", "routes/AddEmployee/AddEmployee.tsx"),
+  route("employee/:id", "routes/EmployeeDetail/EmployeeDetail.tsx"),
 ] satisfies RouteConfig;

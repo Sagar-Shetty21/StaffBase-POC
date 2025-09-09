@@ -120,17 +120,17 @@
         background: rgba(59, 130, 246, 0.2);
         color: #60a5fa;
 
-        &::after {
-            content: "";
-            position: absolute;
-            bottom: -0.75rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            background: #3b82f6;
-            border-radius: 50%;
-        }
+        // &::after {
+        //     content: "";
+        //     position: absolute;
+        //     bottom: -0.75rem;
+        //     left: 50%;
+        //     transform: translateX(-50%);
+        //     width: 4px;
+        //     height: 4px;
+        //     background: #3b82f6;
+        //     border-radius: 50%;
+        // }
     }
 }
 

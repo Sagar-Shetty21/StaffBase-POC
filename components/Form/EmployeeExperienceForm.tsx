@@ -287,6 +287,10 @@ const EmployeeExperienceForm: React.FC<EmployeeExperienceFormProps> = ({
                 <div className={styles.headerDivider}></div>
             </div>
 
+            {experienceList.length === 0 && !isEditing && (
+                <p>{"Not provided"}</p>
+            )}
+
             <div className={styles.experienceList}>
                 {experienceList.map((experience) => (
                     <div key={experience.id}>

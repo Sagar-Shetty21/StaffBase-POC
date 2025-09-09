@@ -1,6 +1,7 @@
 import React from "react";
 import type { ReactNode } from "react";
 import styles from "./DateInput.module.scss";
+import { formatDateForInput } from "utils/helpers";
 
 interface DateInputProps {
   label: string;
@@ -23,25 +24,16 @@ const DateInput: React.FC<DateInputProps> = ({
     }
   };
 
-  if (isDisabled) {
-    return children
-  }
-
   return (
     <div className={styles.wrapper}>
       <input
         type="date"
-        value={value}
+        value={formatDateForInput(value)}
         onChange={handleChange}
         className={styles.dateInput}
+        disabled={isDisabled}
       />
-      <label
-        className={`${styles.label} ${
-          value ? styles.labelFilled : ""
-        }`}
-      >
-        {label}
-      </label>
+      <label className={`${styles.label} ${styles.labelFilled}`}>{label}</label>
     </div>
   );
 };
