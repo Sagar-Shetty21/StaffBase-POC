@@ -16,22 +16,35 @@ import { getErrorMessage, jsonToFormData } from "utils/helpers";
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
+
   try {
-    const parsed = parseEmployeeForm(formData);
-    const addEmployee = await postEmployee(formData);
+    const validatedData = parseEmployeeForm(formData);
+    const addEmployee = await postEmployee(validatedData);
 
     if (addEmployee) {
-      return redirect(`/employee/${addEmployee.id}`);
-      // return {isSuccess: true, message: "Successfully added employee", data: newEmployeeData}
+      // redirect with a Response
+      return new Response(null, {
+        status: 302,
+        headers: { Location: `/employee/${addEmployee.id}` },
+      });
     }
-  } catch (err) {
-    return { isSuccess: false, message: getErrorMessage(err) };
-  }
 
-  return {
-    isSuccess: false,
-    message: "Something went wrong. Please try again",
-  };
+    return new Response(
+      JSON.stringify({
+        isSuccess: false,
+        message: "Something went wrong. Please try again",
+      }),
+      { status: 500, headers: { "Content-Type": "application/json" } }
+    );
+  } catch (err) {
+    return new Response(
+      JSON.stringify({
+        isSuccess: false,
+        message: getErrorMessage(err),
+      }),
+      { status: 400, headers: { "Content-Type": "application/json" } }
+    );
+  }
 }
 
 export default function AddEmployee() {
