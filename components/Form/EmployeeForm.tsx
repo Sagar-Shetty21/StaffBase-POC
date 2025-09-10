@@ -17,7 +17,7 @@ interface EmployeeFormData {
   bio: string;
   is_remote: boolean;
   preferred_working_hours: string;
-  birth_date: string;
+  date_of_birth: string;
   emergency_contact: string;
   linkedin_profile: string;
   performance_rating: number;
@@ -163,14 +163,14 @@ export default function EmployeeForm({ onSubmit }: EmployeeFormProps) {
 
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
-              <label htmlFor="birth_date" className={styles.label}>
+              <label htmlFor="date_of_birth" className={styles.label}>
                 Date of Birth
               </label>
               <input
-                id="birth_date"
+                id="date_of_birth"
                 type="date"
                 className={styles.input}
-                {...register("birth_date")}
+                {...register("date_of_birth")}
               />
             </div>
 

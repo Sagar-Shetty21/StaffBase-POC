@@ -3,7 +3,9 @@ import { getFirstDayOfCurrentMonth } from "utils/helpers";
 
 const API_BASE =
   (typeof process !== "undefined" && process.env?.BACKEND_API_URL_BASE) ||
+  import.meta.env.VITE_BACKEND_API_URL_BASE ||
   "http://127.0.0.1:8090/api/";
+console.log(API_BASE);
 
 export async function fetchEmployeePaginationData(): Promise<EmployeeResponse> {
   const url = `${API_BASE}collections/employees/records?page=1&perPage=1`;

@@ -121,7 +121,9 @@ export function toEmployeeProfileData(
     linkedin_profile: employee.linkedin_profile ?? "",
     performance_rating: employee.performance_rating ?? 0,
     notification_preferences: employee.notification_preferences
-      ? employee.notification_preferences.map((p) => p.toString())
+      ? Array.isArray(employee.notification_preferences)
+        ? employee.notification_preferences
+        : employee.notification_preferences.split(",")
       : [],
     work_location: employee.work_location?.toString() ?? "",
     contract_end_date: employee.contract_end_date ?? undefined,
@@ -152,8 +154,8 @@ export function toEmployee(
         : undefined,
     notification_preferences:
       data.notification_preferences?.length > 0
-        ? (data.notification_preferences as Employee["notification_preferences"])
-        : [],
+        ? (data.notification_preferences.join(",") as string)
+        : "",
     work_location: data.work_location as WorkLocation,
     contract_end_date: data.contract_end_date || undefined,
     preferred_communication:

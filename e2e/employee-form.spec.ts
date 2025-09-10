@@ -32,7 +32,7 @@ test.describe("Employee Form E2E Tests", () => {
     // Fill Personal Information Section
     await page.fill('[data-testid="employee-name"]', employeeData.name);
     await page.fill("#email", employeeData.email);
-    await page.fill("#birth_date", employeeData.birthDate);
+    await page.fill("#date_of_birth", employeeData.birthDate);
     await page.fill("#emergency_contact", employeeData.emergencyContact);
     await page.fill("#linkedin_profile", employeeData.linkedinProfile);
 
