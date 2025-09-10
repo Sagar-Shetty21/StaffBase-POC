@@ -39,31 +39,27 @@ RUN wget https://github.com/pocketbase/pocketbase/releases/download/v0.22.0/pock
     && chmod +x pocketbase \
     && rm pocketbase_0.22.0_linux_amd64.zip
 
-# Create startup script
-RUN cat > /app/start.sh << 'EOF'
-#!/bin/bash
-echo "Starting services..."
-
-# Start PocketBase in background
-cd /app/backend
-echo "Starting PocketBase on port 8090..."
-./pocketbase serve --http=0.0.0.0:8090 --dir=/app/pb_data &
-
-# Wait a moment for PocketBase to start
-sleep 2
-
-# Start frontend on port from environment (Render sets this)
-cd /app
-PORT=${PORT:-3000}
-echo "Starting frontend on port $PORT..."
-echo "Contents of /app:"
-ls -la /app/
-echo "Contents of /app/frontend:"
-ls -la /app/frontend/
-
-# Serve the React app from the frontend directory
-serve -s /app/frontend -l $PORT --no-clipboard --verbose
-EOF
+# Create startup script using echo commands
+RUN echo '#!/bin/bash' > /app/start.sh && \
+    echo 'echo "Starting services..."' >> /app/start.sh && \
+    echo '' >> /app/start.sh && \
+    echo '# Start PocketBase in background' >> /app/start.sh && \
+    echo 'cd /app/backend' >> /app/start.sh && \
+    echo 'echo "Starting PocketBase on port 8090..."' >> /app/start.sh && \
+    echo './pocketbase serve --http=0.0.0.0:8090 --dir=/app/pb_data &' >> /app/start.sh && \
+    echo '' >> /app/start.sh && \
+    echo '# Wait a moment for PocketBase to start' >> /app/start.sh && \
+    echo 'sleep 2' >> /app/start.sh && \
+    echo '' >> /app/start.sh && \
+    echo '# Start frontend' >> /app/start.sh && \
+    echo 'cd /app' >> /app/start.sh && \
+    echo 'PORT=${PORT:-3000}' >> /app/start.sh && \
+    echo 'echo "Starting frontend on port $PORT..."' >> /app/start.sh && \
+    echo 'echo "Contents of /app/frontend:"' >> /app/start.sh && \
+    echo 'ls -la /app/frontend/' >> /app/start.sh && \
+    echo '' >> /app/start.sh && \
+    echo '# Serve the React app' >> /app/start.sh && \
+    echo 'serve -s /app/frontend -l $PORT --no-clipboard --single' >> /app/start.sh
 
 RUN chmod +x /app/start.sh
 
