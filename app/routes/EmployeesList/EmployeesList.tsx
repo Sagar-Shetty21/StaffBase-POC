@@ -45,6 +45,7 @@ export default function EmployeesList() {
         page={data?.page ?? 1}
         totalPages={data?.totalPages ?? 1}
         setPage={setPage}
+        totalItems={data?.totalItems ?? 0}
       />
     </div>
   );

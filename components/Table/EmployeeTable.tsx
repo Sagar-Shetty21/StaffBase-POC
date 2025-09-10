@@ -15,6 +15,7 @@ type Props = {
   data: Employee[];
   page: number;
   totalPages: number;
+  totalItems?: number;
   setPage: React.Dispatch<React.SetStateAction<number>>;
 };
 
@@ -22,6 +23,7 @@ const EmployeeTable: React.FC<Props> = ({
   data,
   page,
   totalPages,
+  totalItems,
   setPage,
 }) => {
   const [globalFilter, setGlobalFilter] = useState("");
@@ -176,7 +178,7 @@ const EmployeeTable: React.FC<Props> = ({
         <div className={styles.paginationInfo}>
           <span className={styles.resultCount}>
             Showing {(page - 1) * 10 + 1} to {Math.min(page * 10, data.length)}{" "}
-            of {data.length} employees
+            of {totalItems} employees
           </span>
         </div>
         <div className={styles.paginationControls}>
