@@ -1,72 +1,58 @@
-# Multi-service Dockerfile for Render
-FROM node:18-alpine as frontend-builder
+# Simpler single-stage Dockerfile for Render
+FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy package files first for better caching
-COPY package*.json ./
+# Install system dependencies
+RUN apk add --no-cache wget unzip bash
 
-# Install dependencies
-RUN npm ci
+# Copy and install frontend dependencies
+COPY package*.json ./
+RUN npm install
 
 # Copy source code
 COPY . .
 
-# Build the React app
+# Build the frontend
 RUN npm run build
 
-# Final stage with both services
-FROM alpine:latest
-
-# Install required packages
-RUN apk add --no-cache \
-    nodejs \
-    npm \
-    wget \
-    unzip \
-    bash
-
-# Install serve for frontend
+# Install serve globally
 RUN npm install -g serve
 
-# Copy built frontend
-COPY --from=frontend-builder /app/build /app/frontend
+# Download PocketBase
+RUN mkdir -p /app/pocketbase && \
+    cd /app/pocketbase && \
+    wget https://github.com/pocketbase/pocketbase/releases/download/v0.22.0/pocketbase_0.22.0_linux_amd64.zip && \
+    unzip pocketbase_0.22.0_linux_amd64.zip && \
+    chmod +x pocketbase && \
+    rm pocketbase_0.22.0_linux_amd64.zip
 
-# Download and setup PocketBase
-WORKDIR /app/backend
-RUN wget https://github.com/pocketbase/pocketbase/releases/download/v0.22.0/pocketbase_0.22.0_linux_amd64.zip \
-    && unzip pocketbase_0.22.0_linux_amd64.zip \
-    && chmod +x pocketbase \
-    && rm pocketbase_0.22.0_linux_amd64.zip
-
-# Create startup script using echo commands
-RUN echo '#!/bin/bash' > /app/start.sh && \
-    echo 'echo "Starting services..."' >> /app/start.sh && \
-    echo '' >> /app/start.sh && \
-    echo '# Start PocketBase in background' >> /app/start.sh && \
-    echo 'cd /app/backend' >> /app/start.sh && \
-    echo 'echo "Starting PocketBase on port 8090..."' >> /app/start.sh && \
-    echo './pocketbase serve --http=0.0.0.0:8090 --dir=/app/pb_data &' >> /app/start.sh && \
-    echo '' >> /app/start.sh && \
-    echo '# Wait a moment for PocketBase to start' >> /app/start.sh && \
-    echo 'sleep 2' >> /app/start.sh && \
-    echo '' >> /app/start.sh && \
-    echo '# Start frontend' >> /app/start.sh && \
-    echo 'cd /app' >> /app/start.sh && \
-    echo 'PORT=${PORT:-3000}' >> /app/start.sh && \
-    echo 'echo "Starting frontend on port $PORT..."' >> /app/start.sh && \
-    echo 'echo "Contents of /app/frontend:"' >> /app/start.sh && \
-    echo 'ls -la /app/frontend/' >> /app/start.sh && \
-    echo '' >> /app/start.sh && \
-    echo '# Serve the React app' >> /app/start.sh && \
-    echo 'serve -s /app/frontend -l $PORT --no-clipboard --single' >> /app/start.sh
+# Create startup script using printf (more reliable than heredoc)
+RUN printf '#!/bin/bash\n\
+echo "Starting PocketBase and React app..."\n\
+\n\
+# Start PocketBase in background\n\
+cd /app/pocketbase\n\
+./pocketbase serve --http=0.0.0.0:8090 --dir=/app/pb_data &\n\
+\n\
+# Wait for PocketBase to start\n\
+sleep 3\n\
+\n\
+# Start frontend server\n\
+PORT=${PORT:-3000}\n\
+echo "Starting frontend on port $PORT"\n\
+echo "Build directory contents:"\n\
+ls -la /app/build/\n\
+\n\
+# Serve the built React app\n\
+serve -s /app/build -l $PORT --no-clipboard --single\n' > /app/start.sh
 
 RUN chmod +x /app/start.sh
 
-# Create directory for PocketBase data
+# Create data directory
 RUN mkdir -p /app/pb_data
 
-# Expose port (Render uses PORT env var)
+# Expose port
 EXPOSE 3000
 
 CMD ["/app/start.sh"]

@@ -2,32 +2,12 @@ import React, { useState, useEffect } from "react";
 import styles from "./EmployeeEditableForm.module.scss";
 import TextInput from "components/Inputs/TextInput";
 import DateInput from "components/Inputs/DateInput";
-
-interface EmployeeProfileData {
-    name: string;
-    email: string;
-    department: string;
-    designation: string;
-    joining_date: string;
-    employment_type: string;
-    skills: string[];
-    bio: string;
-    is_remote: boolean;
-    preferred_working_hours: string;
-    birth_date: string;
-    emergency_contact: string;
-    linkedin_profile: string;
-    performance_rating: number;
-    notification_preferences: string[];
-    work_location: string;
-    contract_end_date?: string;
-    preferred_communication: string;
-}
+import type { EmployeeProfileFormData } from "types/employee";
 
 interface EmployeeProfileFormProps {
-    initialData?: Partial<EmployeeProfileData>;
+    initialData?: Partial<EmployeeProfileFormData>;
     isUpdating?: boolean;
-    onSubmit?: (data: EmployeeProfileData) => void;
+    onSubmit?: (data: EmployeeProfileFormData) => void;
     onCancel?: () => void;
 }
 
@@ -79,7 +59,7 @@ export default function EmployeeProfileForm({
     onSubmit,
     onCancel,
 }: EmployeeProfileFormProps) {
-    const [formData, setFormData] = useState<EmployeeProfileData>({
+    const [formData, setFormData] = useState<EmployeeProfileFormData>({
         name: "",
         email: "",
         department: "",
@@ -104,7 +84,7 @@ export default function EmployeeProfileForm({
     const [newSkill, setNewSkill] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const updateField = (field: keyof EmployeeProfileData, value: any) => {
+    const updateField = (field: keyof EmployeeProfileFormData, value: any) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
     };
 

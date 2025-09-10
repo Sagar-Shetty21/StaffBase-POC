@@ -7,6 +7,8 @@ import DateInput from "components/Inputs/DateInput";
 import EmployeeExperienceForm from "components/Form/EmployeeExperienceForm";
 import type { Route } from "./+types/EmployeeDetail";
 import EmployeeProfileForm from "components/Form/EmployeeEditableForm";
+import { toEmployeeProfileData } from "utils/helpers";
+import type { Employee } from "types/employee";
 
 export async function loader({ params }: Route.LoaderArgs) {
     const employeeId = params.id;
@@ -80,7 +82,7 @@ export default function EmployeeDetail({ loaderData }: Route.ComponentProps) {
             {/* Top Section */}
             <EmployeeProfileForm
                 isUpdating={isUpdating}
-                // initialData={employee}
+                initialData={toEmployeeProfileData(employee as Employee)}
             />
 
             {/* Additional Details */}

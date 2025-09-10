@@ -1,17 +1,19 @@
+import type { Employee, EmployeeProfileFormData } from "types/employee";
+
 export function getErrorMessage(err: unknown): string {
-  if (err instanceof Error) return err.message;
-  return String(err);
+    if (err instanceof Error) return err.message;
+    return String(err);
 }
 
 /**
  * Returns the first day of the current month as an ISO date string (YYYY-MM-DD).
  */
 export function getFirstDayOfCurrentMonth(): string {
-  const now = new Date();
-  const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+    const now = new Date();
+    const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
 
-  // Format as YYYY-MM-DD
-  return firstDay.toISOString().split("T")[0];
+    // Format as YYYY-MM-DD
+    return firstDay.toISOString().split("T")[0];
 }
 
 /**
@@ -19,25 +21,25 @@ export function getFirstDayOfCurrentMonth(): string {
  * Example: "Linda Myers" -> "LM"
  */
 export function getInitials(fullName: string): string {
-  if (!fullName.trim()) return "";
+    if (!fullName.trim()) return "";
 
-  return fullName
-    .trim()
-    .split(/\s+/) // split by spaces (handles multiple spaces too)
-    .map((word) => word[0]?.toUpperCase() ?? "")
-    .join("");
+    return fullName
+        .trim()
+        .split(/\s+/) // split by spaces (handles multiple spaces too)
+        .map((word) => word[0]?.toUpperCase() ?? "")
+        .join("");
 }
 
 export function generateAPIQueryForGlobalSearch(search: string): string {
-  // genrate query for global search
-  // search in name, email, department, designation, skills
-  // api is pocketbase
-  // example query: (name~"john"||email~"john"||department~"john"||designation~"john"||skills~"john")
-  const fields = ["name", "email", "department", "designation", "skills"];
-  const query = fields
-    .map((field) => `${field}~"${encodeURIComponent(search)}"`)
-    .join("||");
-  return `filter=(${query})&page=1&perPage=20`;
+    // genrate query for global search
+    // search in name, email, department, designation, skills
+    // api is pocketbase
+    // example query: (name~"john"||email~"john"||department~"john"||designation~"john"||skills~"john")
+    const fields = ["name", "email", "department", "designation", "skills"];
+    const query = fields
+        .map((field) => `${field}~"${encodeURIComponent(search)}"`)
+        .join("||");
+    return `filter=(${query})&page=1&perPage=20`;
 }
 
 /**
@@ -45,48 +47,78 @@ export function generateAPIQueryForGlobalSearch(search: string): string {
  * for use in HTML <input type="date">.
  */
 export function formatDateForInput(date: Date | string): string {
-  if (!date) return "";
+    if (!date) return "";
 
-  const d = typeof date === "string" ? new Date(date) : date;
+    const d = typeof date === "string" ? new Date(date) : date;
 
-  if (isNaN(d.getTime())) {
-    console.warn("Invalid date passed to formatDateForInput:", date);
-    return "";
-  }
+    if (isNaN(d.getTime())) {
+        console.warn("Invalid date passed to formatDateForInput:", date);
+        return "";
+    }
 
-  return d.toISOString().split("T")[0]; // Extract YYYY-MM-DD
+    return d.toISOString().split("T")[0]; // Extract YYYY-MM-DD
 }
 
 export function jsonToFormData(data: Record<string, any>): FormData {
-  const formData = new FormData();
+    const formData = new FormData();
 
-  Object.entries(data).forEach(([key, value]) => {
-    console.log(key, value, typeof value);
-    if (value === undefined || value === null) {
-      return; // skip empty
-    }
+    Object.entries(data).forEach(([key, value]) => {
+        console.log(key, value, typeof value);
+        if (value === undefined || value === null) {
+            return; // skip empty
+        }
 
-    // ✅ Handle arrays (e.g., multi-select, checkboxes)
-    if (Array.isArray(value)) {
-      value.forEach((item) => formData.append(key, item));
-      return;
-    }
+        // ✅ Handle arrays (e.g., multi-select, checkboxes)
+        if (Array.isArray(value)) {
+            value.forEach((item) => formData.append(key, item));
+            return;
+        }
 
-    // ✅ Handle File (or Blob)
-    if (value instanceof File || value instanceof Blob) {
-      formData.append(key, value);
-      return;
-    }
+        // ✅ Handle File (or Blob)
+        if (value instanceof File || value instanceof Blob) {
+            formData.append(key, value);
+            return;
+        }
 
-    // ✅ Handle booleans
-    if (typeof value === "boolean") {
-      formData.append(key, value ? "true" : "false");
-      return;
-    }
+        // ✅ Handle booleans
+        if (typeof value === "boolean") {
+            formData.append(key, value ? "true" : "false");
+            return;
+        }
 
-    // ✅ Handle everything else (string, number, etc.)
-    formData.append(key, value.toString());
-  });
+        // ✅ Handle everything else (string, number, etc.)
+        formData.append(key, value.toString());
+    });
 
-  return formData;
+    return formData;
+}
+
+export function toEmployeeProfileData(
+    employee: Employee
+): EmployeeProfileFormData {
+    return {
+        name: employee.name,
+        email: employee.email,
+        department: employee.department?.toString() ?? "",
+        designation: employee.designation,
+        joining_date: employee.joining_date,
+        employment_type: employee.employment_type?.toString() ?? "",
+        skills: employee.skills
+            ? employee.skills.split(",").map((s) => s.trim())
+            : [],
+        bio: employee.bio ?? "",
+        is_remote: employee.is_remote ?? false,
+        preferred_working_hours: employee.preferred_working_hours ?? "",
+        birth_date: employee.date_of_birth ?? "",
+        emergency_contact: employee.emergency_contact ?? "",
+        linkedin_profile: employee.linkedin_profile ?? "",
+        performance_rating: employee.performance_rating ?? 0,
+        notification_preferences: employee.notification_preferences
+            ? employee.notification_preferences.map((p) => p.toString())
+            : [],
+        work_location: employee.work_location?.toString() ?? "",
+        contract_end_date: employee.contract_end_date ?? undefined,
+        preferred_communication:
+            employee.preferred_communication?.toString() ?? "",
+    };
 }
