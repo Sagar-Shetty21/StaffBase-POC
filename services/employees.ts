@@ -1,7 +1,7 @@
 import type { Employee, EmployeeResponse } from "types/employee";
 
 const API_BASE =
-  (typeof process !== "undefined" && process.env?.POCKETBASE_URL) ||
+  (typeof process !== "undefined" && process.env?.BACKEND_API_URL_BASE) ||
   "http://127.0.0.1:8090/api/";
 
 export async function fetchEmployees(
