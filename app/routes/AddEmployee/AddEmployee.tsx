@@ -4,6 +4,7 @@ import {
   redirect,
   useActionData,
   useLoaderData,
+  useNavigation,
   useSubmit,
   type ActionFunctionArgs,
   type LoaderFunctionArgs,
@@ -49,6 +50,11 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export default function AddEmployee() {
   const submit = useSubmit();
+  const navigation = useNavigation();
+
+  const isSubmitting =
+    navigation.state === "submitting" || navigation.state === "loading";
+
   //   let actionResult = useActionData<typeof action>();
   //   const [result, setResult] = React.useState<typeof actionResult>();
 
@@ -80,9 +86,13 @@ export default function AddEmployee() {
         )} */}
 
       {/* REDIRECT TO DIFFERENT ROUTE */}
-      <EmployeeForm
-        onSubmit={(data) => submit({ ...data }, { method: "POST" })}
-      />
+      {isSubmitting ? (
+        <div className={styles.submitting}>Adding Employee...</div>
+      ) : (
+        <EmployeeForm
+          onSubmit={(data) => submit({ ...data }, { method: "POST" })}
+        />
+      )}
     </div>
   );
 }
