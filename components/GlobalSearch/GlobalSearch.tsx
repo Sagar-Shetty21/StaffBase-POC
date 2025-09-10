@@ -8,6 +8,7 @@ type GlobalSearchProps = {};
 
 const GlobalSearch = ({}: GlobalSearchProps) => {
   const { search, isActive, setIsActive } = useGlobalSearch();
+
   if (!isActive) return null;
 
   const { data: employees, isLoading, isError } = useEmployeeSearch(search);

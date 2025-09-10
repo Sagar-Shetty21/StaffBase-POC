@@ -116,7 +116,7 @@ export function toEmployeeProfileData(
     bio: employee.bio ?? "",
     is_remote: employee.is_remote ?? false,
     preferred_working_hours: employee.preferred_working_hours ?? "",
-    birth_date: employee.date_of_birth ?? "",
+    date_of_birth: employee.date_of_birth ?? "",
     emergency_contact: employee.emergency_contact ?? "",
     linkedin_profile: employee.linkedin_profile ?? "",
     performance_rating: employee.performance_rating ?? 0,
@@ -143,7 +143,7 @@ export function toEmployee(
     bio: data.bio || undefined,
     is_remote: data.is_remote ?? false,
     preferred_working_hours: data.preferred_working_hours || undefined,
-    date_of_birth: data.birth_date || undefined,
+    date_of_birth: data.date_of_birth || undefined,
     emergency_contact: data.emergency_contact || undefined,
     linkedin_profile: data.linkedin_profile || undefined,
     performance_rating:

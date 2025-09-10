@@ -1,8 +1,8 @@
 @use "../../assets/styles/mixins" as mixins;
 
 .container {
-  position: absolute;
-  top: 0;
+  position: fixed;
+  top: 70px;
   right: 0;
   left: 0;
   bottom: 0;
