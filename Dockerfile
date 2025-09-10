@@ -23,7 +23,7 @@ RUN apk add --no-cache \
 RUN npm install -g serve
 
 # Copy built frontend
-COPY --from=frontend-builder /app/dist /app/frontend
+COPY --from=frontend-builder /app/build /app/frontend
 
 # Download and setup PocketBase
 WORKDIR /app/backend
