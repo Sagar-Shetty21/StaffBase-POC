@@ -43,7 +43,7 @@ export default function EmployeeProfileForm({
     bio: "",
     is_remote: false,
     preferred_working_hours: "",
-    birth_date: "",
+    date_of_birth: "",
     emergency_contact: "",
     linkedin_profile: "",
     performance_rating: 5,
@@ -136,8 +136,8 @@ export default function EmployeeProfileForm({
           <div className={styles.formRow}>
             <DateInput
               label="Date of Birth"
-              value={formData.birth_date}
-              onChange={(value) => updateField("birth_date", value)}
+              value={formData.date_of_birth}
+              onChange={(value) => updateField("date_of_birth", value)}
               isDisabled={!isUpdating}
             />
 

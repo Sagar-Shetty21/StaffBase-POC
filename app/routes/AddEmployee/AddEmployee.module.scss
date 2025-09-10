@@ -26,13 +26,20 @@
 }
 
 .btnContainer {
-    display: flex;
-    align-items: center;
-    justify-content: end;
-    padding: 12px 0;
-    button {
-        padding: 8px 12px;
-        background-color: aquamarine;
-        border-radius: 0.6rem;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding: 12px 0;
+  button {
+    padding: 8px 12px;
+    background-color: aquamarine;
+    border-radius: 0.6rem;
+  }
+}
+
+.submitting {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 1rem;
 }
