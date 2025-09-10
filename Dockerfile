@@ -3,10 +3,16 @@ FROM node:18-alpine as frontend-builder
 
 WORKDIR /app
 
-# Build React app
+# Copy package files first for better caching
 COPY package*.json ./
+
+# Install dependencies
 RUN npm ci
+
+# Copy source code
 COPY . .
+
+# Build the React app
 RUN npm run build
 
 # Final stage with both services
@@ -17,7 +23,8 @@ RUN apk add --no-cache \
     nodejs \
     npm \
     wget \
-    unzip
+    unzip \
+    bash
 
 # Install serve for frontend
 RUN npm install -g serve
@@ -33,18 +40,35 @@ RUN wget https://github.com/pocketbase/pocketbase/releases/download/v0.22.0/pock
     && rm pocketbase_0.22.0_linux_amd64.zip
 
 # Create startup script
-COPY <<EOF /app/start.sh
-#!/bin/sh
+RUN cat > /app/start.sh << 'EOF'
+#!/bin/bash
+echo "Starting services..."
+
 # Start PocketBase in background
 cd /app/backend
-./pocketbase serve --http=0.0.0.0:8090 &
+echo "Starting PocketBase on port 8090..."
+./pocketbase serve --http=0.0.0.0:8090 --dir=/app/pb_data &
 
-# Start frontend
+# Wait a moment for PocketBase to start
+sleep 2
+
+# Start frontend on port from environment (Render sets this)
 cd /app
-serve -s frontend -l 3000 -n
+PORT=${PORT:-3000}
+echo "Starting frontend on port $PORT..."
+echo "Contents of /app:"
+ls -la /app/
+echo "Contents of /app/frontend:"
+ls -la /app/frontend/
+
+# Serve the React app from the frontend directory
+serve -s /app/frontend -l $PORT --no-clipboard --verbose
 EOF
 
 RUN chmod +x /app/start.sh
+
+# Create directory for PocketBase data
+RUN mkdir -p /app/pb_data
 
 # Expose port (Render uses PORT env var)
 EXPOSE 3000
