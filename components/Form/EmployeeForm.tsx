@@ -37,11 +37,14 @@ export default function EmployeeForm({ onSubmit }: EmployeeFormProps) {
     handleSubmit,
     control,
     watch,
+    setError,
     formState: { errors, isSubmitting },
     setValue,
     getValues,
+    clearErrors,
     trigger,
   } = useForm<EmployeeFormData>({
+    mode: "onChange", // Validates on every keystroke
     defaultValues: {
       is_remote: false,
       employment_type: "Full-time",
@@ -86,9 +89,13 @@ export default function EmployeeForm({ onSubmit }: EmployeeFormProps) {
     );
 
     if (alreadyExists) {
+      setError("new_skill_temp", {
+        type: "manual",
+        message: "This skill already exists",
+      });
       return;
     }
-
+    clearErrors("new_skill_temp");
     const updatedSkills = [...currentSkills, newSkill.trim()];
     setValue("skills", updatedSkills);
     setValue("new_skill_temp", "");
@@ -404,6 +411,11 @@ export default function EmployeeForm({ onSubmit }: EmployeeFormProps) {
                 +
               </button>
             </div>
+            {errors.new_skill_temp && (
+              <span className={styles.errorText}>
+                {errors.new_skill_temp.message}
+              </span>
+            )}
 
             <div data-testid="skills-container" className={styles.skillsList}>
               {skillsValue.map((skill) => (
