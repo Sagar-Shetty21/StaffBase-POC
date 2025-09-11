@@ -4,7 +4,6 @@ const API_BASE =
   (typeof process !== "undefined" && process.env?.BACKEND_API_URL_BASE) ||
   import.meta.env.VITE_BACKEND_API_URL_BASE ||
   "http://127.0.0.1:8090/api/";
-console.log(API_BASE);
 
 export async function fetchEmployees(
   page = 1,

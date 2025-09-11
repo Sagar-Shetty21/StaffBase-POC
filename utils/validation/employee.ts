@@ -41,7 +41,7 @@ export function parseEmployeeForm(formData: FormData): Omit<Employee, "id"> {
     contract_end_date:
       (formData.get("contract_end_date") as string) || undefined,
     work_location: formData.get("work_location") as WorkLocation | undefined,
-    is_remote: formData.get("is_remote") ? true : false,
+    is_remote: formData.get("is_remote") === "true",
 
     preferred_working_hours: formData.get("preferred_working_hours") as
       | string
@@ -56,16 +56,21 @@ export function parseEmployeeForm(formData: FormData): Omit<Employee, "id"> {
       : undefined,
     bio: formData.get("bio") as string | undefined,
 
-    notification_preferences: (
-      formData.getAll("notification_preferences") as string[]
-    ).filter((v): v is NotificationPreference =>
-      [
-        "email_notifications",
-        "sms_notifications",
-        "push_notifications",
-        "calendar_reminders",
-      ].includes(v)
-    ),
+    notification_preferences: (() => {
+      const prefs = formData.get("notification_preferences") as string;
+      if (!prefs) return [];
+
+      return prefs
+        .split(",")
+        .filter((v): v is NotificationPreference =>
+          [
+            "email_notifications",
+            "sms_notifications",
+            "push_notifications",
+            "calendar_reminders",
+          ].includes(v.trim())
+        );
+    })(),
 
     profile_picture:
       (formData.get("profile_picture") as File | null) || undefined,

@@ -18,7 +18,7 @@ export interface Employee {
   performance_rating?: number;
   profile_picture?: File | string;
   bio?: string;
-  notification_preferences?: string | string[];
+  notification_preferences?: string[];
 }
 
 export type EmploymentType =

@@ -1,40 +1,41 @@
 {
-    "name": "staff-base",
-    "private": true,
-    "type": "module",
-    "scripts": {
-        "build": "react-router build",
-        "dev": "react-router dev",
-        "start": "react-router-serve ./build/server/index.js",
-        "typecheck": "react-router typegen && tsc",
-        "test": "vitest",
-        "test:e2e": "playwright test"
-    },
-    "dependencies": {
-        "@react-router/node": "^7.7.1",
-        "@react-router/serve": "^7.7.1",
-        "@tanstack/react-query": "^5.86.0",
-        "@tanstack/react-table": "^8.21.3",
-        "isbot": "^5.1.27",
-        "lucide-react": "^0.542.0",
-        "react": "^19.1.0",
-        "react-dom": "^19.1.0",
-        "react-hook-form": "^7.62.0",
-        "react-router": "^7.7.1",
-        "sass": "^1.92.0"
-    },
-    "devDependencies": {
-        "@playwright/test": "^1.55.0",
-        "@react-router/dev": "^7.7.1",
-        "@testing-library/react": "^16.3.0",
-        "@types/node": "^20",
-        "@types/react": "^19.1.2",
-        "@types/react-dom": "^19.1.2",
-        "jsdom": "^26.1.0",
-        "playwright": "^1.55.0",
-        "typescript": "^5.8.3",
-        "vite": "^6.3.3",
-        "vite-tsconfig-paths": "^5.1.4",
-        "vitest": "^3.2.4"
-    }
+  "name": "staff-base",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "react-router build",
+    "dev": "react-router dev",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc",
+    "test": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e-ui": "playwright test --ui"
+  },
+  "dependencies": {
+    "@react-router/node": "^7.7.1",
+    "@react-router/serve": "^7.7.1",
+    "@tanstack/react-query": "^5.86.0",
+    "@tanstack/react-table": "^8.21.3",
+    "isbot": "^5.1.27",
+    "lucide-react": "^0.542.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.62.0",
+    "react-router": "^7.7.1",
+    "sass": "^1.92.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.55.0",
+    "@react-router/dev": "^7.7.1",
+    "@testing-library/react": "^16.3.0",
+    "@types/node": "^20",
+    "@types/react": "^19.1.2",
+    "@types/react-dom": "^19.1.2",
+    "jsdom": "^26.1.0",
+    "playwright": "^1.55.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.3",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
+  }
 }
